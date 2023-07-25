@@ -1,0 +1,7 @@
+{% include "datapanel/css.html" %}
+<div class="text-with-label-group-container">
+    <h2>{{ rendered_value.title }}</h2>
+    {% for row in rendered_value.values_formatted %}
+        {% include "datapanel/row.html" with row=row counter=forloop.counter %}
+    {% endfor %}
+</div>

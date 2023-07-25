@@ -1,0 +1,37 @@
+<div class="dropdown-container">
+    <h2>{{ rendered_value.title }}</h2>
+    <label>
+        <select id="{{ rendered_value.dropdown_id }}" multiple="multiple">
+            <option value="">---------</option>
+            {% for option in rendered_value.values_formatted %}
+                {% include "dropdown/option.html" with option=option counter=forloop.counter %}
+            {% endfor %}
+        </select>
+    </label>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const dropdownId = '#{{ rendered_value.dropdown_id }}';
+        const queryParamName = '{{ rendered_value.var_name }}';
+        const multiple = '{{ rendered_value.multiple }}';
+        $(dropdownId).select2({
+            placeholder: "Select an option",
+            dropdownAutoWidth: true,
+            width: '100%',
+            allowClear: true,
+            multiple: multiple === "True",
+            dropdownCssClass: "dropdown-class",
+            {#theme: "classic",#}
+        });
+        $(dropdownId).on('change', function (e) {
+            let newUrl = removeQueryParams(window.location.href, queryParamName);
+            const selectedData = $(this).select2('data');
+            selectedData.forEach(function (value) {
+                newUrl = addQueryParam(newUrl, queryParamName, value.id);
+            });
+
+            window.location.href = newUrl;
+        });
+    });
+</script>

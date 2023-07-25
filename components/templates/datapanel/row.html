@@ -1,0 +1,15 @@
+<div class="text-with-label-row-container">
+    <div class="title-container">
+        <span>{{ row.label }}</span>
+    </div>
+    <div class="values-container">
+        {% for val in row.values %}
+            <div class="each-value-container">
+                <span class="sp-label">{{ val.label }}</span>
+                <div class="sp-value-container" style="background: {{ val.color }}">
+                    <span class="sp-value">{{ val.value }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

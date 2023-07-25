@@ -1,0 +1,37 @@
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    function replaceQueryParam(url, paramName, newValue) {
+      const urlObj = new URL(url);
+      const searchParams = new URLSearchParams(urlObj.search);
+
+      // Set the new value for the specified query parameter
+      searchParams.set(paramName, newValue);
+
+      // Build the new URL with the updated query parameters
+      urlObj.search = searchParams.toString();
+      return urlObj.toString();
+    }
+
+    function removeQueryParams(url, paramName) {
+        const urlObj = new URL(url);
+        const searchParams = new URLSearchParams(urlObj.search);
+
+        searchParams.delete(paramName);
+
+        // Build the new URL without any query parameters
+        urlObj.search = searchParams.toString();
+        return urlObj.toString();
+    }
+
+    function addQueryParam(url, paramName, paramValue) {
+        const urlObj = new URL(url);
+        const searchParams = new URLSearchParams(urlObj.search);
+
+        // Append the query parameter with the specified name and value
+        searchParams.append(paramName, paramValue);
+
+        // Build the new URL with the added query parameter
+        urlObj.search = searchParams.toString();
+        return urlObj.toString();
+    }
+</script>

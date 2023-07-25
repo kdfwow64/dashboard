@@ -1,0 +1,76 @@
+<div class="gauge" style="position: relative">
+    <script type="module">
+        const steps = {{ rendered_value.steps_list | safe }};
+        const gauge = {{ gauge | safe }};
+        let i;
+        steps.sort(function(a, b) {
+          return a.value - b.value;
+        });
+
+        const mainChartId = "{{ component.template_id }}{{ counter }}";
+        const dialRadius = 40;
+        const showValue = false;
+
+        const componentGauge = Gauge(document.getElementById(mainChartId), {
+            max: {{rendered_value.max}},
+            color: function(value) {
+                for (i = 0; i < steps.length; i++) {
+                    if (value <= steps[i].value) {
+                        return steps[i].color;
+                    }
+                }
+            },
+            dialStartAngle: 160,
+            dialEndAngle: 20,
+            dialRadius,
+            {% if rendered_value.min %}min: {{rendered_value.min}}{% endif %}
+            showValue
+        })
+
+        componentGauge.setValue(0);
+        componentGauge.setValueAnimated(gauge.value, 3);
+
+        let startAngle = 160;
+        let endAngle = 20;
+        let differ = 0;
+        for (i = 0; i < steps.length; i++) {
+            endAngle = 20 - 200/100* (100 - steps[i].value);
+            if (startAngle < endAngle) {
+                startAngle += 360;
+            }
+            const step = `${mainChartId}_step_${i+1}`;
+            const stepGauge = Gauge(document.getElementById(step), {
+                max: {{rendered_value.max}},
+                color: function(value) {
+                    return steps[i].color;
+                },
+                dialStartAngle: startAngle,
+                dialEndAngle: endAngle,
+                dialRadius,
+                {% if rendered_value.min %}min: {{rendered_value.min}}{% endif %}
+                showValue
+            })
+            document.getElementById(step).style.zIndex = steps.length - i + 1;
+            startAngle = endAngle;
+
+            stepGauge.setValue(0);
+            stepGauge.setValueAnimated(100, 1);
+        }
+
+    </script>
+
+    <div id="{{ component.template_id }}{{ counter }}" class="gauge-container">
+        <div class="gauge-content">
+            <span class="gauge-value-text" style="color: {{ rendered_value.value_color }}">{{ gauge.value|default:gauge.value }}{{ rendered_value.symbol }}</span>
+            {% if gauge.label %}<span class="gauge-sub-text">{{ gauge.label }}</span>{% endif %}
+        </div>
+    </div>
+    {% for step in rendered_value.steps %}
+        <div class="gauge-steps-container">
+            <div id="{{ component.template_id }}{{ counter }}_step_{{ forloop.counter }}" class="gauge-container">
+                <div class="gauge-content">
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

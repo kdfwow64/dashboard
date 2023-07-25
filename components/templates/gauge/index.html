@@ -1,0 +1,31 @@
+<style>
+    .card {
+        color: white;
+        background-color: #404040;
+    }
+    .gauge-group-container {
+        align-items: center;
+        margin-top: 40px;
+    }
+
+    .gauge-sub-charts-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .gauge-sub-charts-container > .gauge {
+        width: 20%;
+    }
+</style>
+{% include "gauge/css.html" %}
+<div class="gauge-group-container dashboard-container">
+    <div class="gauge-main-chart-container span-3">
+        <h3>{{ rendered_value.title }}</h3>
+        {% include "gauge/sub.html" with gauge=rendered_value.main_chart counter=0 %}
+    </div>
+    <div class="gauge-sub-charts-container span-9">
+        {% for gauge in rendered_value.sub_charts %}
+            {% include "gauge/sub.html" with gauge=gauge counter=forloop.counter %}
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<style>
+    .card {
+        background-color: #404040;
+        color: white;
+    }
+
+    .text-with-label-group-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .text-with-label-row-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 4px 0;
+    }
+
+    .text-with-label-row-container .title-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 150px;
+    }
+
+    .text-with-label-row-container .title-container > span {
+        color: white;
+    }
+
+    .text-with-label-row-container .values-container {
+        display: flex;
+        align-items: center;
+        width: calc(100% - 150px);
+    }
+
+    .each-value-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 2px;
+        background-color: black;
+        border: 1px solid #646464;
+        width: 16.666%;
+    }
+
+    .each-value-container > .sp-label {
+        display: inline-block;
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: white;
+    }
+
+    .each-value-container > .sp-value-container {
+        font-size: 24px;
+        width: 100%;
+        height: 64px;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .each-value-container > .sp-value-container > span.sp-value {
+        color: white;
+    }
+</style>

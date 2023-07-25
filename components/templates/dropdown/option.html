@@ -1,0 +1,5 @@
+{% if option.value == rendered_value.selected_value or option.value in rendered_value.selected_value %}
+    <option value="{{ option.value }}" class="wave-option" selected="selected">{{ option.label }}</option>
+{% else %}
+    <option value="{{ option.value }}" class="wave-option">{{ option.label }}</option>
+{% endif %}

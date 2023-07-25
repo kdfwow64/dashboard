@@ -1,0 +1,57 @@
+<style>
+
+    .dashboard-component-inner {
+        padding: 0;
+    }
+
+    .gauge-steps-container {
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+    }
+
+    .gauge-content {
+        top: 62%;
+    }
+
+    .gauge-value-text {
+        font-size: 100%;
+    }
+
+    .gauge-sub-text {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: white;
+    }
+
+    .gauge-steps-container .gauge-container > .gauge .value {
+        stroke-width: 2;
+    }
+
+    .gauge-steps-container .gauge-container > .gauge .dial {
+        stroke: transparent;
+    }
+
+    .gauge > .gauge-container > .gauge .value, .gauge > .gauge-container > .gauge .dial {
+        stroke-width: 12;
+    }
+
+    .gauge > .gauge-container > .gauge .dial {
+        opacity: 1;
+        stroke: #24332c;
+    }
+
+    .card.card-grid-container > .card-body {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: 1rem;
+        gap: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+</style>
