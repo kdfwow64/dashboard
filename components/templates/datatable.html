@@ -58,6 +58,9 @@
 
           for (i=0; i < percentageColumnIds.length ; i ++) {
               columns[percentageColumnIds[i]]["render"] = function ( data, type, row, meta ) {
+                  if (data === "-") {
+                      return "";
+                  }
                   if (href) {
                       let link = href;
                       for (let j = 0; j < hrefReplaceColumnIds.length; j++) {
@@ -66,13 +69,16 @@
                       }
                       return '<a href="' + link + '" style="text-decoration: underline;">' + parseFloat(data).toFixed(2) + '%' + '</a>';
                   }
-                    return parseFloat(data).toFixed(2) + '%';
+                  return parseFloat(data).toFixed(2) + '%';
               };
           }
 
           if (href) {
               for (i = 0; i < columns.length && !percentageColumnIds.includes(i); i++) {
                   columns[i]["render"] = function (data, type, row, meta) {
+                      if (data === "-") {
+                          return "";
+                      }
                       let link = href;
                       for (let j = 0; j < hrefReplaceColumnIds.length; j++) {
                           const dat = row[columns[hrefReplaceColumnIds[j]].data];
@@ -99,6 +105,9 @@
                         let bgColor = "#ff0000";
                         let color = "#ffffff";
                         const val = data[columns[columnTurn].data];
+                        if (val === "-") {
+                            continue;
+                        }
                         for (let j = 0; j < steps.length; j++) {
                             if (val <= steps[j].value) {
                                 bgColor = steps[j].color;
