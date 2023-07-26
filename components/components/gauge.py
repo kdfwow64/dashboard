@@ -13,16 +13,13 @@ class Step:
         self.color = color
 
     def to_dict(self) -> dict:
-        return {
-            "value": self.value,
-            "color": self.color
-        }
+        return {"value": self.value, "color": self.color}
 
 
 DEFAULT_STEPS_FOR_GAUGE = [
-    Step(value=70, color="rgb(196, 22, 42)"),   # red
-    Step(value=85, color="rgb(224, 180, 0)"),   # yellow
-    Step(value=100, color="rgb(55, 135, 45)")   # green
+    Step(value=70, color="rgb(196, 22, 42)"),  # red
+    Step(value=85, color="rgb(224, 180, 0)"),  # yellow
+    Step(value=100, color="rgb(55, 135, 45)"),  # green
 ]
 
 
@@ -36,6 +33,7 @@ class GaugeValue(BaseGaugeValue):
     sub_charts: list = field(default_factory=list)
     main_chart: dict = field(default_factory=dict)
     title: str = ""
+    none_value: int = -1
 
     def __post_init__(self):
         steps_list = [step.to_dict() for step in self.steps]

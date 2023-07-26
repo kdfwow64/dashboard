@@ -1,6 +1,7 @@
 <div class="gauge" style="position: relative">
     <script type="module">
         const steps = {{ rendered_value.steps_list | safe }};
+        const noneValue = {{ rendered_value.none_value | safe }};
         const gauge = {{ gauge | safe }};
         let i;
         steps.sort(function(a, b) {
@@ -28,7 +29,7 @@
         })
 
         componentGauge.setValue(0);
-        componentGauge.setValueAnimated(gauge.value, 3);
+        componentGauge.setValueAnimated(gauge.value === noneValue ? 0 : gauge.value, 3);
 
         let startAngle = 160;
         let endAngle = 20;
@@ -61,7 +62,13 @@
 
     <div id="{{ component.template_id }}{{ counter }}" class="gauge-container">
         <div class="gauge-content">
-            <span class="gauge-value-text" style="color: {{ rendered_value.value_color }}">{{ gauge.value|default:gauge.value }}{{ rendered_value.symbol }}</span>
+            <span class="gauge-value-text" style="color: {{ rendered_value.value_color }}">
+                {% if gauge.value == rendered_value.none_value %}
+                    {{ "" }}
+                {% else %}
+                    {{ gauge.value|default:gauge.value }}{{ rendered_value.symbol }}
+                {% endif %}
+            </span>
             {% if gauge.label %}<span class="gauge-sub-text">{{ gauge.label }}</span>{% endif %}
         </div>
     </div>
