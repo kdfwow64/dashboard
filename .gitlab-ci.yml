@@ -1,0 +1,61 @@
+---
+stages:
+  - dev_build
+  - prod_build
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_NO_CACHE: "false"
+  GIT_STRATEGY: clone
+  ROLE_EXTERNAL_ID: "ECSGitlabRunner"
+  REGION: "us-east-1"
+
+
+dev_build:
+  stage: dev_build
+  image: docker:18.09.7
+  services:
+    - docker:18.09.7-dind
+  variables:
+    ROLE: "arn:aws:iam::238988874017:role/SAF-ECS-Task"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_BUILD_REF_NAME == "develop"'
+
+  environment:
+    name: dev
+
+  before_script:
+    - docker info
+    - apk add --no-cache curl git bash jq make
+    - apk add --no-cache python3-dev python3 py3-setuptools
+    - curl -O https://bootstrap.pypa.io/get-pip.py
+    - python3 get-pip.py
+    - pip3 install awscli
+
+  script:
+    - /bin/bash ./deployment_scripts/dev.sh
+
+
+prod_build:
+  stage: prod_build
+  image: docker:18.09.7
+  services:
+    - docker:18.09.7-dind
+  variables:
+    ROLE: "arn:aws:iam::467911368405:role/SAF-ECS-Task"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_BUILD_REF_NAME == "main"'
+  environment:
+    name: prod
+
+  before_script:
+    - docker info
+    - apk add --no-cache curl git bash jq make
+    - apk add --no-cache python3-dev python3 py3-setuptools
+    - curl -O https://bootstrap.pypa.io/get-pip.py
+    - python3 get-pip.py
+    - pip3 install awscli
+
+  script:
+    - /bin/bash ./deployment_scripts/prod.sh
