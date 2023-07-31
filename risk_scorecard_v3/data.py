@@ -3,7 +3,6 @@ from django.db import connection
 
 from components.components import Gauge, GaugeValue
 from components.components.dropdown import (
-    Dropdown,
     DropdownValueObject,
     DropdownOptionValueObject,
 )
@@ -272,17 +271,32 @@ def get_wave_data(wave_ids: list):
     for res in results:
         data.append(DropdownOptionValueObject(label=res[0], value=res[0]))
 
-    dropdown = Dropdown(
-        value=DropdownValueObject(
-            multiple=True,
-            var_name="var-wave",
-            dropdown_id="wave_id",
-            title="Wave",
-            values=data,
-            selected_value=wave_ids,
-        )
+    value = DropdownValueObject(
+        multiple=True,
+        var_name="var-wave",
+        dropdown_id="wave_id",
+        title="Wave",
+        values=data,
+        selected_value=wave_ids,
     )
-    return dropdown
+    return value
+
+
+def get_financial_data(financial_str):
+    data = []
+    data.append(DropdownOptionValueObject(label="All", value="All"))
+    data.append(DropdownOptionValueObject(label="true", value="true"))
+    data.append(DropdownOptionValueObject(label="false", value="false"))
+
+    value = DropdownValueObject(
+        multiple=False,
+        var_name="var-financial",
+        dropdown_id="financial",
+        title="CTO Rep",
+        values=data,
+        selected_value=financial_str,
+    )
+    return value
 
 
 def get_tower_name_dropdown(tower_name: str):
@@ -294,13 +308,12 @@ def get_tower_name_dropdown(tower_name: str):
     for res in results:
         data.append(DropdownOptionValueObject(label=res[0], value=res[0]))
 
-    dropdown = Dropdown(
-        value=DropdownValueObject(
-            var_name="var-tower",
-            dropdown_id="tower_name",
-            title="Tower Name",
-            values=data,
-            selected_value=tower_name,
-        )
+    value = DropdownValueObject(
+        var_name="var-tower",
+        dropdown_id="tower_name",
+        title="Tower Name",
+        values=data,
+        selected_value=tower_name,
     )
-    return dropdown
+
+    return value

@@ -28,6 +28,14 @@ class DropdownValueObject:
 
     def __post_init__(self):
         values = []
+        if self.multiple:
+            values.append(
+                {
+                    "label": "All",
+                    "value": "All",
+                }
+            )
+
         for value in self.values:
             values.append(value.to_dict())
 

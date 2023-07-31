@@ -1,0 +1,5 @@
+<div class="dropdown-menu-container">
+    {% for dropdown in rendered_value %}
+        {% include "dropdown/index.html" with rendered_value=dropdown %}
+    {% endfor %}
+</div>
